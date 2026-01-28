@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ale & Ale • Un Mes de Magia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Playfair+Display:wght@700;900&family=Nunito:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cosmic-purple: #2d1b3d;
+            --stardust-pink: #ff6b9d;
+            --celestial-blue: #4a90e2;
+            --moonlight: #f8f4f0;
+            --golden-glow: #ffd700;
+            --deep-space: #0a0612;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--deep-space) 0%, var(--cosmic-purple) 50%, #1a0f2e 100%);
+            color: var(--moonlight);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Estrellas animadas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            animation: shoot 4s infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% { 
+                transform: translateX(-100px) translateY(0) rotate(-45deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateX(1000px) translateY(500px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Header con nombres */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .names {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--stardust-pink), var(--celestial-blue), var(--golden-glow));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease infinite, float 3s ease-in-out infinite;
+            text-shadow: 0 0 60px rgba(255, 107, 157, 0.3);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .separator {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 0.6em;
+            opacity: 0.8;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            margin-top: 20px;
+            color: var(--moonlight);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Sección de corazones animados */
+        .hearts-section {
+            position: relative;
+            height: 400px;
+            margin: 80px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .heart {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--stardust-pink), #ff3366);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 240px;
+            background: inherit;
+            border-radius: 150px 150px 0 0;
+        }
+
+        .heart:before {
+            left: 75px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { filter: drop-shadow(0 0 20px var(--stardust-pink)); }
+            50% { filter: drop-shadow(0 0 40px var(--stardust-pink)); }
+        }
+
+        /* Iniciales flotantes */
+        .initials {
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            z-index: 10;
+        }
+
+        .initial-1 {
+            top: 50%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            animation: floatLeft 4s ease-in-out infinite;
+        }
+
+        .initial-2 {
+            top: 50%;
+            right: 20%;
+            transform: translate(50%, -50%);
+            animation: floatRight 4s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes floatLeft {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(-5deg); }
+            50% { transform: translate(-50%, -50%) translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes floatRight {
+            0%, 100% { transform: translate(50%, -50%) translateY(0) rotate(5deg); }
+            50% { transform: translate(50%, -50%) translateY(-20px) rotate(-5deg); }
+        }
+
+        /* Mensaje principal */
+        .message {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.5s ease-out 1s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--golden-glow), var(--stardust-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .message p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 300;
+            color: var(--moonlight);
+            text-align: justify;
+        }
+
+        .message .highlight {
+            color: var(--stardust-pink);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Señales del universo */
+        .universe-signs {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(255, 107, 157, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .universe-signs h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--golden-glow);
+        }
+
+        .signs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .sign-card {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out backwards;
+        }
+
+        .sign-card:nth-child(1) { animation-delay: 1.2s; }
+        .sign-card:nth-child(2) { animation-delay: 1.4s; }
+        .sign-card:nth-child(3) { animation-delay: 1.6s; }
+
+        .sign-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.2);
+            border-color: var(--stardust-pink);
+        }
+
+        .sign-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .sign-card p {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* Timeline */
+        .timeline {
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 40px 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 40px;
+            animation: fadeInLeft 1s ease-out backwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 1.8s; }
+        .timeline-item:nth-child(2) { animation-delay: 2s; }
+        .timeline-item:nth-child(3) { animation-delay: 2.2s; }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--stardust-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--stardust-pink);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% + 20px);
+            background: linear-gradient(180deg, var(--stardust-pink), transparent);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--golden-glow);
+        }
+
+        .timeline-content p {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--moonlight);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin: 80px 0 40px;
+            padding: 40px 20px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .footer-heart {
+            font-size: 3rem;
+            color: var(--stardust-pink);
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .footer p {
+            font-size: 1.2rem;
+            color: var(--moonlight);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hearts-section {
+                height: 300px;
+            }
+
+            .heart-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .heart:before,
+            .heart:after {
+                width: 100px;
+                height: 160px;
+                border-radius: 100px 100px 0 0;
+            }
+
+            .heart:before {
+                left: 50px;
+            }
+
+            .initials {
+                font-size: 2.5rem;
+            }
+
+            .message {
+                padding: 40px 25px;
+            }
+
+            .signs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="names">
+                Ale <span class="separator">×</span> Ale
+            </h1>
+            <p class="subtitle">Un Mes de Magia</p>
+        </div>
+
+        <!-- Corazones con iniciales -->
+        <div class="hearts-section">
+            <div class="initials initial-1">A</div>
+            <div class="heart-container">
+                <div class="heart"></div>
+            </div>
+            <div class="initials initial-2">A</div>
+        </div>
+
+        <!-- Mensaje principal -->
+        <div class="message">
+            <h2>Nuestro Mes Cósmico</h2>
+            <p>
+                Un mes. Treinta días. Setecientas veinte horas. Y en cada segundo, 
+                <span class="highlight">el universo nos ha estado susurrando</span> que estamos exactamente 
+                donde debemos estar.
+            </p>
+            <p>
+                Han sido <span class="highlight">muchas piedritas en el camino</span>, es cierto. 
+                Pero cada obstáculo, cada desafío, cada momento difícil solo ha hecho que nuestra 
+                conexión se vuelva más fuerte, más real, más nuestra.
+            </p>
+            <p>
+                Y lo más hermoso es cómo <span class="highlight">todo fluye</span> cuando estamos juntos. 
+                Como si las estrellas se alinearan, como si el cosmos mismo conspirara a nuestro favor. 
+                Esas señales raras, únicas, inesperadas... son la forma del universo de decirnos: 
+                <span class="highlight">"Sigan adelante, van por buen camino"</span>.
+            </p>
+
+            <div class="universe-signs">
+                <h3>✨ Las Señales del Universo ✨</h3>
+                <div class="signs-grid">
+                    <div class="sign-card">
+                        <div class="sign-icon">🌙</div>
+                        <p>Esas coincidencias que nos hacen sonreír y pensar "¿qué probabilidades había?"</p>
+                    </div>
+                    <div class="sign-card">
+                        <div class="sign-icon">⭐</div>
+                        <p>Los momentos perfectos que llegan justo cuando los necesitamos</p>
+                    </div>
+                    <div class="sign-card">
+                        <div class="sign-icon">💫</div>
+                        <p>Esa sensación de que todo encaja, de que estamos en sintonía con algo más grande</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>El Comienzo</h4>
+                    <p>Dos Ales que el destino decidió reunir. Contra todo pronóstico, 
+                    contra todas las dudas, decidimos intentarlo.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Las Tormentas</h4>
+                    <p>Piedritas, obstáculos, momentos difíciles. Pero cada uno solo nos enseñó 
+                    que juntos podemos con todo.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>La Confirmación</h4>
+                    <p>El universo hablando en su lenguaje misterioso, diciéndonos con gestos únicos 
+                    y raros que estamos exactamente donde debemos estar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-heart">💕</div>
+            <p>Aquí está a nosotros, a nuestro fluir, y a todo lo que el universo tiene preparado para los dos Ales.</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.6;">
+                Enero 28, 2026 • Un mes de pura magia
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Crear estrellas
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 150;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+
+            // Crear estrellas fugaces
+            for (let i = 0; i < 3; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.animationDelay = Math.random() * 8 + 's';
+                shootingStar.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                starsContainer.appendChild(shootingStar);
+            }
+        }
+
+        // Inicializar
+        createStars();
+
+        // Efecto de parallax suave en scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                const speed = (index % 3 + 1) * 0.1;
+                star.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Animación de entrada
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
