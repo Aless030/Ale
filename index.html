@@ -30,6 +30,47 @@
             min-height: 100vh;
         }
 
+        /* Control de música */
+        .music-control {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulseMusic 2s ease-in-out infinite;
+        }
+
+        .music-control:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--stardust-pink);
+        }
+
+        .music-control.playing {
+            background: rgba(255, 107, 157, 0.2);
+            border-color: var(--stardust-pink);
+        }
+
+        @keyframes pulseMusic {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .music-icon {
+            font-size: 1.5rem;
+            color: var(--moonlight);
+        }
+
         /* Estrellas animadas de fondo */
         .stars {
             position: fixed;
@@ -152,109 +193,224 @@
             to { opacity: 1; }
         }
 
-        /* Sección de corazones animados */
-        .hearts-section {
+        /* Pareja tomada de la mano */
+        .couple-animation {
             position: relative;
-            height: 400px;
-            margin: 80px 0;
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            margin: 80px auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            animation: fadeIn 2s ease-out 1s backwards;
         }
 
-        .heart-container {
+        .person {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .person-left {
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .person-right {
+            right: 15%;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .person-head {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--stardust-pink), var(--celestial-blue));
+            border-radius: 50%;
+            margin-bottom: 10px;
+            box-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
             position: relative;
-            width: 300px;
-            height: 300px;
-            animation: pulse 2s ease-in-out infinite;
+            overflow: hidden;
         }
 
-        .heart {
+        .person-left .person-head {
+            background: linear-gradient(135deg, var(--stardust-pink), #ff8ab8);
+        }
+
+        .person-right .person-head {
+            background: linear-gradient(135deg, var(--celestial-blue), #6bb0ff);
+        }
+
+        .person-head::after {
+            content: '😊';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .person-body {
+            width: 70px;
+            height: 90px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border-radius: 35px 35px 20px 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .person-arm {
+            position: absolute;
+            width: 10px;
+            height: 70px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+            border-radius: 5px;
+            top: 15px;
+        }
+
+        .person-left .person-arm {
+            right: -35px;
+            transform-origin: top center;
+            animation: armWaveLeft 3s ease-in-out infinite;
+        }
+
+        .person-right .person-arm {
+            left: -35px;
+            transform-origin: top center;
+            animation: armWaveRight 3s ease-in-out infinite;
+        }
+
+        @keyframes armWaveLeft {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(40deg); }
+        }
+
+        @keyframes armWaveRight {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-40deg); }
+        }
+
+        .holding-hands {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 50px;
+            z-index: 5;
+        }
+
+        .hand-connection {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--stardust-pink), var(--golden-glow), var(--celestial-blue));
+            background-size: 200% 100%;
+            border-radius: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: glowHands 2s ease-in-out infinite, gradientMove 3s ease infinite;
+            box-shadow: 0 0 20px var(--golden-glow);
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes glowHands {
+            0%, 100% { 
+                box-shadow: 0 0 20px var(--golden-glow);
+                filter: brightness(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px var(--golden-glow), 0 0 60px var(--stardust-pink);
+                filter: brightness(1.3);
+            }
+        }
+
+        .hand {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, var(--moonlight), rgba(255, 255, 255, 0.6));
+            border-radius: 50% 50% 50% 0;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hand-left {
+            left: -5px;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        .hand-right {
+            right: -5px;
+            transform: translateY(-50%) rotate(135deg);
+        }
+
+        .couple-label {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--stardust-pink), var(--celestial-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .hearts-floating {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--stardust-pink), #ff3366);
-            animation: heartbeat 1.5s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        .heart:before,
-        .heart:after {
-            content: "";
+        .mini-heart {
             position: absolute;
-            width: 150px;
-            height: 240px;
-            background: inherit;
-            border-radius: 150px 150px 0 0;
+            font-size: 1.5rem;
+            animation: floatUp 4s ease-in infinite;
+            opacity: 0;
         }
 
-        .heart:before {
-            left: 75px;
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-        }
-
-        .heart:after {
-            left: 0;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { filter: drop-shadow(0 0 20px var(--stardust-pink)); }
-            50% { filter: drop-shadow(0 0 40px var(--stardust-pink)); }
-        }
-
-        /* Iniciales flotantes */
-        .initials {
-            position: absolute;
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-            z-index: 10;
-        }
-
-        .initial-1 {
-            top: 50%;
-            left: 20%;
-            transform: translate(-50%, -50%);
-            animation: floatLeft 4s ease-in-out infinite;
-        }
-
-        .initial-2 {
-            top: 50%;
-            right: 20%;
-            transform: translate(50%, -50%);
-            animation: floatRight 4s ease-in-out infinite 0.5s;
-        }
-
-        @keyframes floatLeft {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(-5deg); }
-            50% { transform: translate(-50%, -50%) translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes floatRight {
-            0%, 100% { transform: translate(50%, -50%) translateY(0) rotate(5deg); }
-            50% { transform: translate(50%, -50%) translateY(-20px) rotate(-5deg); }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-250px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Mensaje principal */
         .message {
             max-width: 800px;
-            margin: 80px auto;
+            margin: 120px auto 80px;
             padding: 60px 40px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1.5s ease-out 1s backwards;
+            animation: fadeInUp 1.5s ease-out 1.5s backwards;
         }
 
         @keyframes fadeInUp {
@@ -328,9 +484,9 @@
             animation: fadeIn 1s ease-out backwards;
         }
 
-        .sign-card:nth-child(1) { animation-delay: 1.2s; }
-        .sign-card:nth-child(2) { animation-delay: 1.4s; }
-        .sign-card:nth-child(3) { animation-delay: 1.6s; }
+        .sign-card:nth-child(1) { animation-delay: 2s; }
+        .sign-card:nth-child(2) { animation-delay: 2.2s; }
+        .sign-card:nth-child(3) { animation-delay: 2.4s; }
 
         .sign-card:hover {
             transform: translateY(-10px);
@@ -366,9 +522,9 @@
             animation: fadeInLeft 1s ease-out backwards;
         }
 
-        .timeline-item:nth-child(1) { animation-delay: 1.8s; }
-        .timeline-item:nth-child(2) { animation-delay: 2s; }
-        .timeline-item:nth-child(3) { animation-delay: 2.2s; }
+        .timeline-item:nth-child(1) { animation-delay: 2.6s; }
+        .timeline-item:nth-child(2) { animation-delay: 2.8s; }
+        .timeline-item:nth-child(3) { animation-delay: 3s; }
 
         @keyframes fadeInLeft {
             from {
@@ -437,6 +593,13 @@
             margin-bottom: 20px;
         }
 
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.15); }
+        }
+
         .footer p {
             font-size: 1.2rem;
             color: var(--moonlight);
@@ -445,32 +608,51 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hearts-section {
-                height: 300px;
+            .music-control {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
             }
 
-            .heart-container {
-                width: 200px;
-                height: 200px;
+            .couple-animation {
+                height: 280px;
+                margin: 60px auto;
             }
 
-            .heart:before,
-            .heart:after {
-                width: 100px;
-                height: 160px;
-                border-radius: 100px 100px 0 0;
+            .person-left {
+                left: 10%;
             }
 
-            .heart:before {
-                left: 50px;
+            .person-right {
+                right: 10%;
             }
 
-            .initials {
-                font-size: 2.5rem;
+            .person-head {
+                width: 45px;
+                height: 45px;
+            }
+
+            .person-head::after {
+                font-size: 1.5rem;
+            }
+
+            .person-body {
+                width: 55px;
+                height: 70px;
+            }
+
+            .holding-hands {
+                width: 120px;
+            }
+
+            .couple-label {
+                font-size: 1.5rem;
             }
 
             .message {
                 padding: 40px 25px;
+                margin-top: 100px;
             }
 
             .signs-grid {
@@ -480,6 +662,16 @@
     </style>
 </head>
 <body>
+    <!-- Control de música -->
+    <div class="music-control" id="musicControl" title="Click para reproducir música">
+        <span class="music-icon">🎵</span>
+    </div>
+
+    <!-- Audio de fondo - Joji: Die For You -->
+    <audio id="backgroundMusic" loop>
+        <source src="Oscar Lang - million little reasons (Sub. Español).mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Estrellas de fondo -->
     <div class="stars" id="stars"></div>
 
@@ -487,23 +679,46 @@
         <!-- Header -->
         <div class="header">
             <h1 class="names">
-                Ale <span class="separator">×</span> Ale
+                Ale <span class="">&</span> Ale
             </h1>
             <p class="subtitle">Un Mes de Magia</p>
         </div>
 
-        <!-- Corazones con iniciales -->
-        <div class="hearts-section">
-            <div class="initials initial-1">A</div>
-            <div class="heart-container">
-                <div class="heart"></div>
+        <!-- Pareja tomada de la mano -->
+        <div class="couple-animation">
+            <!-- Persona izquierda (Ale 1) -->
+            <div class="person person-left">
+                <div class="person-head"></div>
+                <div class="person-body">
+                    <div class="person-arm"></div>
+                </div>
             </div>
-            <div class="initials initial-2">A</div>
+
+            <!-- Manos unidas -->
+            <div class="holding-hands">
+                <div class="hand-connection"></div>
+                <div class="hand hand-left"></div>
+                <div class="hand hand-right"></div>
+            </div>
+
+            <!-- Persona derecha (Ale 2) -->
+            <div class="person person-right">
+                <div class="person-head"></div>
+                <div class="person-body">
+                    <div class="person-arm"></div>
+                </div>
+            </div>
+
+            <!-- Corazones flotantes -->
+            <div class="hearts-floating" id="heartsContainer"></div>
+
+            <!-- Etiqueta -->
+            <div class="couple-label">Mi gran amor</div>
         </div>
 
         <!-- Mensaje principal -->
         <div class="message">
-            <h2>Nuestro Mes Cósmico</h2>
+            <h2>Nuestro Primer Mes Juntos</h2>
             <p>
                 Un mes. Treinta días. Setecientas veinte horas. Y en cada segundo, 
                 <span class="highlight">el universo nos ha estado susurrando</span> que estamos exactamente 
@@ -545,7 +760,7 @@
             <div class="timeline-item">
                 <div class="timeline-content">
                     <h4>El Comienzo</h4>
-                    <p>Dos Ales que el destino decidió reunir. Contra todo pronóstico, 
+                    <p>Dos seres Inteligentes y esquizofrénicos a la vez que el destino decidió reunir. Contra todo pronóstico, 
                     contra todas las dudas, decidimos intentarlo.</p>
                 </div>
             </div>
@@ -560,7 +775,8 @@
                 <div class="timeline-content">
                     <h4>La Confirmación</h4>
                     <p>El universo hablando en su lenguaje misterioso, diciéndonos con gestos únicos 
-                    y raros que estamos exactamente donde debemos estar.</p>
+                    y raros que estamos exactamente donde debemos estar. <br>
+                Hay millones y millones de razones por las que debiamos ser tu y yo.</p>
                 </div>
             </div>
         </div>
@@ -568,14 +784,32 @@
         <!-- Footer -->
         <div class="footer">
             <div class="footer-heart">💕</div>
-            <p>Aquí está a nosotros, a nuestro fluir, y a todo lo que el universo tiene preparado para los dos Ales.</p>
+            <p>Aquí estamos y estaremos, a nuestro fluir, y a todo lo que el universo tiene preparado para nosotros.</p>
             <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.6;">
-                Enero 28, 2026 • Un mes de pura magia
+                Enero 27, 2026 • Eres lo mas bonito y real que pude haber tenido en mi vida.
             </p>
         </div>
     </div>
 
     <script>
+        // Control de música
+        const musicControl = document.getElementById('musicControl');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let isPlaying = false;
+
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicControl.classList.remove('playing');
+                musicControl.querySelector('.music-icon').textContent = '🎵';
+            } else {
+                backgroundMusic.play();
+                musicControl.classList.add('playing');
+                musicControl.querySelector('.music-icon').textContent = '🎶';
+            }
+            isPlaying = !isPlaying;
+        });
+
         // Crear estrellas
         function createStars() {
             const starsContainer = document.getElementById('stars');
@@ -603,8 +837,28 @@
             }
         }
 
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'mini-heart';
+                heart.textContent = '💕';
+                heart.style.left = (40 + Math.random() * 20) + '%';
+                heart.style.bottom = '20%';
+                heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 2000);
+        }
+
         // Inicializar
         createStars();
+        createFloatingHearts();
 
         // Efecto de parallax suave en scroll
         window.addEventListener('scroll', () => {
